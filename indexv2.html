@@ -13,33 +13,53 @@
 
 	<form id="animal-form">
 		<label for="animal-length">Add an animal</label>
-		<input type="text" id="animal-input"></br>
+		<input type="text" id="animal_input"></br>
 		<input id="addAnimal" type="submit" value="Submit">
 	</form>
-	<button data-animal="hbo">meow</button>
-	<button data-animal="showtime">woof</button>
-	<button data-animal="orange juice">chirp</button>
+<!-- 	<button data-animal="meow">meow</button>
+	<button data-animal="woof">woof</button>
+	<button data-animal="chirp">chirp</button> -->
 	<div id="gifsAppearHere">
 	</div>
 
 	<div id="animals">
 
 	</div>
-
 	<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 	<script type="text/javascript">
 
+	var animalSounds = ["meow", "woof", "chirp"];
+
+	for(var i = 0; i < animalSounds.length; i++){
+		// console.log(animalSounds[i]);
+		var $button = $('<button>');
+		$button.addClass("animalSounds").text(animalSounds[i]).attr('data-sound',animalSounds[i]);
+		$('#animalButtons').append($button);
+	}
+
+	$('#addAnimal').on('click', function() {
+		event.preventDefault();
+		var userInput = $('#animal_input').val().trim();
+		animalSounds.push(userInput);  array is not rendered ever again
+		var btn = $('<button>').addClass('animalSounds').attr('data-sound', userInput)
+		btn.text(userInput);
+
+		$('#animalButtons').append(btn);	
+	});
+
+
 	//creating a click function on a button
-	$('button').on('click', function() {
-		var animal = $(this).data('animal');
+	$(document).on('click', '.animalSounds', function() {
+		$('#gifsAppearHere').empty();
+		var animal = $(this).data('sound');
 		var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
 		//passing in one object - $.ajax, which has two properties url: & method.
-		  $.ajax({
-		          url: queryURL,
-		          method: 'GET'
-		    })
+		$.ajax({
+          url: queryURL,
+          method: 'GET'
+		}).done(function(response) {
 		//response now becomes the function/variable that is used for the rest of this portion of the function.
-		  .done(function(response) {
+		
 		          // step 1: Run this file, click a button, and see what the data looks like in the browser's console. Open up the Object, then open up the data key, then open up 0. Study the keys and how the JSON is structured.
 
 		          console.log(response)
@@ -51,7 +71,7 @@
 		          var results = response.data;	
 		          //--------------------------------
 
-		          for (var i = 0; i < results.length; i++) {
+		        for (var i = 0; i < results.length; i++) {
 
 		  /* step 3: 
 		      * uncomment the for loop above and the closing curly bracket below
@@ -69,24 +89,41 @@
 		  */
 
 		          //------------put step 3 in between these dashes--------------------
-		          var animalDiv = $('<div>')
-		      // var p = $('<p>');
-		      // p.text("Rating: " + results[i].rating);
-		          var p = $('<p>').text(results[i]);
-		          var animalImage = $('<img>')
-		          	animalImage.attr('src', results[i].images.fixed_height.url);
-		      //put the p tag onto the animalDiv $(element that is getting appended to).append(element you are appending to animalDiv).
-		          	$(animalDiv).append(p);
-		          	$(animalDiv).append(animalImage);
-		          	$('#gifsAppearHere').prepend(animalDiv);
+			          var animalDiv = $('<div>')
+			          animalDiv.addClass("resultImages").attr('data-state','still');
+			          animalDiv.attr('data-still', results[i].images.fixed_height_still.url).attr('data-animated', results[i].images.fixed_height.url);
+			      // var p = $('<p>');
+			      // p.text("Rating: " + results[i].rating);
+			          var p = $('<p>').text(results[i].rating);
+			          var animalImage = $('<img>');
+			          animalImage.attr('src', results[i].images.fixed_height_still.url);
+			      //put the p tag onto the animalDiv $(element that is getting appended to).append(element you are appending to animalDiv).
+			          animalDiv.append(p);
+			          animalDiv.append(animalImage);
+			          $('#gifsAppearHere').prepend(animalDiv);
 
 		          //-------------------------------
 		      	}
 
-		      });
-		    });
-		    </script>
+        });
+	});
 
+	$(document).on('click', '.resultImages', function(){
+		// I want ot switch the urls between animated and still
+
+		// if it's still ie data-state=still change it to data-state=animted
+		var state = $(this).attr('data-state');
+		if(state === "still"){
+			// var currentUrl = $(this).children()[1].src;
+			$(this).children()[1].src = $(this).data('animated');
+			$(this).attr('data-state', 'animated');			
+		} else {
+			$(this).children()[1].src = $(this).attr('data-still');
+			$(this).attr('data-state', 'still');	
+		}
+
+	});
+	</script>
 
 
 
