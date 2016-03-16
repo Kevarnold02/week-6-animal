@@ -1,0 +1,26 @@
+AnimalTastic App
+
+Step 1 - Hit the giphy API
+	will use ajax function, with method "GET", to hit/ping giphy API, using an on click event.
+
+	Need to set a limit of responses = to 10.
+		Also need to include the rating of giph
+Step 2 - Watch the demo video
+	watched about 100+ time (feels like recursion (ha ha))
+
+Step 3 - Make an array of things
+	This is where the "magic" happens, so to speak.
+
+	Need to make an array of buttons
+		each button has an on click event, so that it "GETS" the button specific ID to return the giphy results.
+
+	The on click event has a limit of 10 results
+
+	With the 10 results showing, there needs to be a click function to switch between animated, and still.
+
+	Need to take "user input", and add it to the array. There will need to be "render buttons" kind of function, and a for loop, so that when "user input" is entered, it "pushes" that input to the array, without repeating the already existing array values.
+
+	As mentioned above, must display the rating of each image on the page. (rating provided by giphy api).
+
+Step 4 - Rejoice
+	Although this step says that I made something really cool. All I've accomplished so far is to *roughly* pseudo code what I interpreted to be the desire result.

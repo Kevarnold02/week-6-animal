@@ -33,8 +33,10 @@
             
       console.log(response)
 
+
             
       var results = response.data;
+
           
         for (var i = 0; i < results.length; i++) {
                
@@ -44,6 +46,16 @@
 
                 var animalImage = $('<img>');
                   animalImage.attr('src', results[i].images.fixed_height.url);
+
+                var state = $(this).attr('data-state'); 
+                if ( state == 'still'){
+                    $(this).attr('src', $(this).data('animate'));
+                    $(this).attr('data-state', 'animate');
+                }else{
+                    $(this).attr('src', $(this).data('still'));
+                    $(this).attr('data-state', 'still');
+                }
+
 
                 animalDiv.append(p);
                 animalDiv.append(animalImage);
@@ -59,6 +71,11 @@
 
 </html>
 
+
+ //buttons, with on click event functions. Once clicked, will use ajax method GET to return gifs with the input information. 
+  week-6/6.3-exercises/10-partners-do-solution.html <--- switch between still and animated gif
+  week-6/6.3-exercise/5-partners-do-solution.html <--- show gifs and rating from pressing button, 
+  week-6/6.2-exercises/13-instructor-do/14.html  <---  display buttons, add buttons, use api, display from api
 
 
       <!-- // step 1: Run this file, click a button, and see what the data looks like in the browser's console. Open up the Object, then open up the data key, then open up 0. Study the keys and how the JSON is structured.
