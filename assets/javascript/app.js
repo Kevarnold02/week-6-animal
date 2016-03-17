@@ -16,14 +16,20 @@ var animalSounds = ["meow", "woof", "chirp"];
 		event.preventDefault();
 		//creating a var called userInput, and capturing the trimmed value to push to the array.
 		var userInput = $('#animal_input').val().trim();
-			if(userInput !== ""){
+			if(userInput !== "") {
+				if(animalSounds.indexOf(userInput) === -1){
 			animalSounds.push(userInput);  //array is not rendered ever again
+
 		//creating a var btn, which created a button with the same class and attributes as the exisiting buttons, and setting the text = to what was submitted using the "submit" button.	
 		var btn = $('<button>').addClass('animalSounds').attr('data-sound', userInput)
 			btn.text(userInput);
 			//we are appending the new button (btn) to the div with the ID = animalButtons.
 			$('#animalButtons').append(btn);
 			$('#animal_input').val("")
+				} else {
+					console.log("item already exists");
+					$('#animal_input').val("");	
+				}
 			} else {
 				console.log("need to type something");
 				$('#animal_input').val("");
