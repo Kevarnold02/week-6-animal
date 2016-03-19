@@ -16,6 +16,7 @@ var animalSounds = ["meow", "woof", "chirp"];
 		event.preventDefault();
 		//creating a var called userInput, and capturing the trimmed value to push to the array.
 		var userInput = $('#animal_input').val().trim();
+			//if user tries to input an existing item, or clicks submit with an empty text box, it will not push anything to array/webpage.
 			if(userInput !== "") {
 				if(animalSounds.indexOf(userInput) === -1){
 			animalSounds.push(userInput);  //array is not rendered ever again
@@ -27,10 +28,12 @@ var animalSounds = ["meow", "woof", "chirp"];
 			$('#animalButtons').append(btn);
 			$('#animal_input').val("")
 				} else {
+					//if item already exists, clear the text box.
 					console.log("item already exists");
 					$('#animal_input').val("");	
 				}
 			} else {
+				//if user clicks submit with no input or spaces, clear the text box.
 				console.log("need to type something");
 				$('#animal_input').val("");
 			}	
